@@ -52,3 +52,13 @@ services:
           # Slicing is CPU and memory intensive. Lower PANCAKE_MAX_JOBS before
           # lowering this below the upstream recommendation of 8 GB.
           memory: "${PANCAKE_MEMORY_LIMIT}"
+
+# TrueNAS SCALE reads x-portals to add an "Open" button on the Installed Apps
+# page. Plain Docker Compose ignores this extension. If you change PANCAKE_PORT,
+# update the port here as well.
+x-portals:
+  - name: PancakeSlicer
+    host: 0.0.0.0
+    port: 6868
+    scheme: http
+    path: /

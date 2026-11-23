@@ -11,6 +11,15 @@ curl -fsS http://<TRUENAS_IP>:6868/api/healthz
 The health response should contain `"status":"ok"`. The engine reports
 `"artifact_state":"qualified"` after its release check passes.
 
+## Mutations fail with 401
+
+**Cause:** `PANCAKE_BEARER_TOKEN` is set and the browser session has not stored
+it, or the token was rotated.
+
+**Fix:** Enter the current token in the UI's access prompt, or open
+`http://<TRUENAS_IP>:6868/?token=<token>` once. Reloading after a rotation also
+prompts again. Reads and `/api/healthz` are unaffected.
+
 ## Permission denied under `/data`
 
 **Symptoms:** The container starts but logs permission errors, or uploads and

@@ -3,6 +3,9 @@
 All deployment-specific values live in `.env` at the project root. The rendered
 `build/compose.yaml` is what TrueNAS consumes.
 
+Create `.env` with `./scripts/init-env.sh`, which also generates a random bearer
+token and sets mode `600`. To manage values manually, copy `.env.example`.
+
 ## General settings
 
 | Variable | Purpose | Default | Secret |
@@ -73,6 +76,11 @@ openssl rand -hex 32
 
 Paste the output into `.env` as the value of `PANCAKE_BEARER_TOKEN`. The value is
 passed through as `ORCA_WEB_BEARER_TOKEN`.
+
+On first use, enter the token in the UI's access prompt, or open
+`http://<TRUENAS_IP>:6868/?token=<token>` once. The app stores it in a browser
+session and removes it from the URL. Rotating the token invalidates the old
+value.
 
 The token protects **mutation** requests. It does not make the UI read-only
 private. For Internet exposure, put an authenticating reverse proxy in front of

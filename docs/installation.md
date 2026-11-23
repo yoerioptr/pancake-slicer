@@ -12,11 +12,11 @@ Deploy PancakeSlicer as a **Custom App** on TrueNAS SCALE 24.10 (Electric Eel) o
 
 ## Step 1: Clone the repository
 
-Clone this private repository to a management machine (not necessarily TrueNAS
+Clone this public repository to a management machine (not necessarily TrueNAS
 itself):
 
 ```bash
-git clone <your-repo-url> pancake-slicer
+git clone https://github.com/yoerioptr/pancake-slicer.git
 cd pancake-slicer
 ```
 
@@ -49,7 +49,17 @@ See [Storage](storage.md) for details.
 ## Step 3: Configure `.env`
 
 ```bash
+./scripts/init-env.sh
+vi .env
+```
+
+`init-env.sh` copies `.env.example`, generates a random
+`PANCAKE_BEARER_TOKEN`, and sets `.env` to mode `600`. If you prefer to manage
+the token yourself:
+
+```bash
 cp .env.example .env
+chmod 600 .env
 vi .env
 ```
 
@@ -59,9 +69,10 @@ At minimum, confirm:
 - `PANCAKE_PORT` (default `6868`)
 - `TZ`
 - `PANCAKE_VERSION` (default `0.5.5`)
+- `PANCAKE_BEARER_TOKEN` — keep the generated value, or clear it only when a
+  reverse proxy authenticates requests
 
-Optionally set `PANCAKE_BEARER_TOKEN` if anyone you do not trust can reach the
-UI. Never commit `.env`.
+Never commit `.env`.
 
 ## Step 4: Render the Compose file
 

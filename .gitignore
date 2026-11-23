@@ -1,10 +1,39 @@
+# ---------------------------------------------------------------------------
+# Local configuration and secrets
+# ---------------------------------------------------------------------------
+# .env holds the bearer token and local paths. .env.example is tracked.
 .env
-.env.local
-.env.production
+.env.*
+!.env.example
 secrets.env
-build/
+
+# Local secret files and certificates (never commit these)
+secrets/
 *.secret
-*.log
-.DS_Store
-.idea
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# ---------------------------------------------------------------------------
+# Rendered deployment artifacts
+# ---------------------------------------------------------------------------
+# build/ contains the rendered Compose YAML, including the inlined token.
+build/
 compose.yaml
+
+# ---------------------------------------------------------------------------
+# Runtime and temporary files
+# ---------------------------------------------------------------------------
+*.log
+*.tmp
+.env.tmp
+.env.tmp.*
+
+# ---------------------------------------------------------------------------
+# Editors and OS metadata
+# ---------------------------------------------------------------------------
+.DS_Store
+.idea/
+.vscode/

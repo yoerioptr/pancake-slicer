@@ -1,0 +1,72 @@
+# ---------------------------------------------------------------------------
+# PancakeSlicer custom app for TrueNAS SCALE
+#
+# This is a static example of the rendered Compose file. For a real deployment,
+# prefer `./scripts/init-env.sh` + `./scripts/render-compose.sh` so paths, ports,
+# and the bearer token come from your local .env.
+#
+# BEFORE SAVING:
+#   1. Create the host paths listed under volumes.
+#   2. Optionally set ORCA_WEB_BEARER_TOKEN to a long random value, for example
+#      the output of `openssl rand -hex 32`.
+#   3. Change the host port if 6868 is already in use.
+#
+# Create the host paths and give the container user ownership:
+#   mkdir -p /mnt/Apps/PancakeSlicer/data /mnt/Apps/PancakeSlicer/cache
+#   chown -R 65532:65532 /mnt/Apps/PancakeSlicer
+# ---------------------------------------------------------------------------
+
+name: pancake-slicer
+
+services:
+  pancakeslicer:
+    image: zimengxiong/pancakeslicer:0.5.5
+    restart: unless-stopped
+
+    ports:
+      - "6868:6868"
+
+    environment:
+      TZ: Etc/UTC
+      ORCA_WEB_MAX_JOBS: "2"
+      ORCA_WEB_PRINTER_NETWORK: lan
+      PANCAKE_STAGE_CACHE_MAX_MB: "1024"
+      ORCA_WEB_BEARER_TOKEN: ""
+      ORCA_WEB_TRUSTED_PROXIES: ""
+      ORCA_WEB_RELEASE_FEED: ""
+
+    volumes:
+      # Projects, profiles, printers, preferences, and finished job state.
+      - /mnt/Apps/PancakeSlicer/data:/data
+      # Disposable slice scratch data. Exclude from snapshots and backups.
+      - /mnt/Apps/PancakeSlicer/cache:/data/jobs/stage-cache
+
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+    healthcheck:
+      # The image is FROM scratch and has no shell. Use the bundled Node runtime.
+      test:
+        - CMD
+        - /usr/bin/node
+        - -e
+        - "fetch('http://127.0.0.1:6868/api/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+    deploy:
+      resources:
+        limits:
+          memory: "8g"
+
+# TrueNAS uses x-portals to show an Open button on the Installed Apps page.
+x-portals:
+  - name: PancakeSlicer
+    host: 0.0.0.0
+    port: 6868
+    scheme: http
+    path: /

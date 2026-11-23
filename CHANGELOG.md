@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2026-11-23
+
+### Added
+- `LICENSE` under the MIT License for this repository's configuration, scripts,
+  and documentation.
+- `scripts/init-env.sh` to create `.env` with a generated bearer token and mode
+  `600`.
+- `docs/security.md` covering the threat model, authentication limits, exposure
+  guidance, and secrets hygiene.
+- `docs/usage.md` covering first-run setup, uploads, slicing, non-planar safety,
+  data locations, and resetting the app.
+- `truenas/pancake-slicer.example.yaml` as a static, ready-to-paste custom app
+  example.
+- An `x-portals` entry so TrueNAS shows an **Open** button for the app.
+- Public-repository documentation links and a validation check for the complete
+  documentation set.
+
+### Changed
+- Rewrote the README for public distribution and removed private/proprietary
+  wording.
+- Expanded `.gitignore` with secret, certificate, editor, and temporary-file
+  patterns.
+- Updated installation and TrueNAS packaging notes to use `init-env.sh` and the
+  public clone URL.
+
 ## [0.1.0] - 2026-11-23
 
 ### Added

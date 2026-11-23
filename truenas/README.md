@@ -3,32 +3,41 @@
 Modern TrueNAS SCALE (24.10 Electric Eel and newer) uses a **Docker-powered Apps**
 system. This repository targets the **Custom App / Install via YAML** workflow.
 
-## Private distribution model
+## Distribution Model
 
-For a private, single-application deployment, the maintainable approach is:
+This repository is public and licensed under MIT. It is consumed as source, not
+published as a TrueNAS catalog:
 
-1. Keep this wrapper repository private.
-2. Render a Compose file from `.env`.
+1. Clone the repository and keep `.env` plus rendered output private.
+2. Render a complete Compose file from `.env`.
 3. Paste it into the TrueNAS Custom App YAML editor.
+
+A static example is available at
+[`pancake-slicer.example.yaml`](pancake-slicer.example.yaml) if you want to see
+the final shape before creating `.env`.
 
 ### Why not a catalog?
 
-TrueNAS catalogs are designed for public distribution and require a specific
-package structure and metadata. For a private deployment of one upstream
-container, a catalog adds maintenance overhead without a meaningful benefit.
+TrueNAS catalogs are designed for broad distribution and require catalog
+metadata, versioning, icons, and a maintained app train. For a single upstream
+container, a catalog adds release overhead without improving the deployment. A
+repository plus a rendered Compose file is easier to review, diff, back up, and
+roll back.
 
-## Deployment workflow
+## Deployment Workflow
 
-1. **Prepare** a management machine with Git and Docker Compose.
-2. **Configure** `.env` from `.env.example`.
+1. **Prepare** a management machine with Git and Docker Compose v2.
+2. **Configure** — run `./scripts/init-env.sh` (or copy `.env.example` to
+   `.env`) and edit the paths, port, and timezone.
 3. **Render** with `./scripts/render-compose.sh`.
 4. **Validate** with `./scripts/validate.sh`.
 5. **Install**:
    - Open **Apps → Discover Apps**.
-   - Choose **Install via YAML**.
+   - Open the three-dot menu next to **Custom App** and choose **Install via
+     YAML**.
    - Name the app `pancake-slicer`.
    - Paste the contents of `build/compose.yaml`.
-   - Install.
+   - Click **Save**.
 6. **Verify** `http://<TRUENAS_IP>:6868/api/healthz`.
 7. **Maintain**: pull the wrapper, update `.env`, re-render, and paste the new
    YAML when upgrading.
@@ -43,6 +52,7 @@ rendered file is authoritative. It includes:
 - The host port.
 - Printer network policy.
 - Any bearer token you configured.
+- An `x-portals` entry for the Open button.
 
 `build/compose.yaml` is written with mode `600` and is gitignored. Treat it as a
 secret when a bearer token is set.
@@ -52,6 +62,10 @@ secret when a bearer token is set.
 - **Application name**: The name entered in the UI is authoritative. The rendered
   file also contains a Compose project name (`pancakeslicer`); TrueNAS may
   override it.
+- **Portal link**: The template includes `x-portals` with `scheme: http` and
+  port `6868`. TrueNAS shows an **Open** button on the Installed Apps page.
+  Plain Docker Compose ignores the key. The static example includes the same
+  block. If you change `PANCAKE_PORT`, update the portal `port` too.
 - **Storage**: Both volumes are host-path bind mounts under `/mnt`, so they are
   visible to datasets, snapshots, and replication.
 - **Ownership**: The upstream image runs as UID/GID `65532`. Set ownership on the

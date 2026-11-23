@@ -5,7 +5,7 @@ TEMPLATE_FILE="compose/compose.template.yaml"
 RENDERED_FILE="build/compose.yaml"
 ENV_EXAMPLE=".env.example"
 
-# Ensure we are in the project root
+# Ensure we are in the project root.
 cd "$(dirname "$0")/.."
 
 echo "--- Starting Validation ---"
@@ -20,35 +20,50 @@ ok() {
 }
 
 # 0. Shell syntax
-echo "[0/10] Checking shell script syntax..."
+echo "[0/12] Checking shell script syntax..."
 bash -n scripts/*.sh
 ok "Shell scripts parse cleanly."
 
-# 1. Compose structural validation
-echo "[1/10] Validating Compose template and variables..."
-COMPOSE_CMD=""
-if docker compose version >/dev/null 2>&1; then
-    COMPOSE_CMD="docker compose"
-elif command -v docker-compose >/dev/null 2>&1; then
-    COMPOSE_CMD="docker-compose"
+# 1. Template variables documented in .env.example
+echo "[1/12] Checking template variables against $ENV_EXAMPLE..."
+MISSING_VARS=0
+while IFS= read -r var; do
+    [ -z "$var" ] && continue
+    if ! grep -qE "^${var}=" "$ENV_EXAMPLE"; then
+        echo "FAIL: $var is used by the template but missing from $ENV_EXAMPLE."
+        MISSING_VARS=1
+    fi
+done < <(grep -oE '\$\{[A-Z0-9_]+\}' "$TEMPLATE_FILE" | tr -d '${}' | sort -u)
+
+if [ "$MISSING_VARS" -ne 0 ]; then
+    fail "Template variables and $ENV_EXAMPLE are out of sync."
+fi
+ok "Every template variable is documented."
+
+# 2. Compose structural validation
+echo "[2/12] Validating Compose template and variables..."
+COMPOSE_CMD=()
+if command -v docker &> /dev/null && docker compose version &> /dev/null; then
+    COMPOSE_CMD=(docker compose)
+elif command -v docker-compose &> /dev/null; then
+    COMPOSE_CMD=(docker-compose)
 fi
 
-if [ -n "$COMPOSE_CMD" ]; then
-    # shellcheck disable=SC2086
-    $COMPOSE_CMD --env-file "$ENV_EXAMPLE" -f "$TEMPLATE_FILE" config >/dev/null
+if [ ${#COMPOSE_CMD[@]} -gt 0 ]; then
+    "${COMPOSE_CMD[@]}" --env-file "$ENV_EXAMPLE" -f "$TEMPLATE_FILE" config >/dev/null
     ok "YAML and variables are valid."
 else
     echo "WARN: docker compose not found; skipping structural YAML validation."
 fi
 
-# 2. Required service
-echo "[2/10] Checking required service..."
+# 3. Required service
+echo "[3/12] Checking required service..."
 grep -qE '^  pancakeslicer:$' "$TEMPLATE_FILE" \
     || fail "Service 'pancakeslicer' is missing from $TEMPLATE_FILE."
 ok "Service 'pancakeslicer' is present."
 
-# 3. Pinned image
-echo "[3/10] Checking image pin..."
+# 4. Pinned image
+echo "[4/12] Checking image pin..."
 grep -qF 'image: "${PANCAKE_IMAGE}:${PANCAKE_VERSION}"' "$TEMPLATE_FILE" \
     || fail "The image must be '\${PANCAKE_IMAGE}:\${PANCAKE_VERSION}'."
 grep -qE '^PANCAKE_VERSION=[0-9]+\.[0-9]+\.[0-9]+$' "$ENV_EXAMPLE" \
@@ -66,16 +81,16 @@ if [ -f "$RENDERED_FILE" ]; then
 fi
 ok "Image is pinned to a semver release."
 
-# 4. LAN port mapping
-echo "[4/10] Checking LAN port mapping..."
+# 5. LAN port mapping
+echo "[5/12] Checking LAN port mapping..."
 grep -qF '${PANCAKE_PORT}:6868' "$TEMPLATE_FILE" \
     || fail "The template must map \${PANCAKE_PORT} to container port 6868."
 grep -qE '^PANCAKE_PORT=[0-9]+$' "$ENV_EXAMPLE" \
     || fail "PANCAKE_PORT must be numeric in $ENV_EXAMPLE."
 ok "Port mapping is correct."
 
-# 5. Persistent storage
-echo "[5/10] Checking persistent storage..."
+# 6. Persistent storage
+echo "[6/12] Checking persistent storage..."
 grep -qF '${PANCAKE_DATA_PATH}:/data' "$TEMPLATE_FILE" \
     || fail "Missing the \${PANCAKE_DATA_PATH}:/data volume mapping."
 grep -qF '${PANCAKE_CACHE_PATH}:/data/jobs/stage-cache' "$TEMPLATE_FILE" \
@@ -86,16 +101,16 @@ grep -qE '^PANCAKE_CACHE_PATH=/mnt/' "$ENV_EXAMPLE" \
     || fail "PANCAKE_CACHE_PATH should be under /mnt on TrueNAS."
 ok "Data and cache mounts are configured."
 
-# 6. Required environment variables
-echo "[6/10] Checking required environment variables..."
+# 7. Required environment variables
+echo "[7/12] Checking required environment variables..."
 for var in TZ ORCA_WEB_MAX_JOBS ORCA_WEB_PRINTER_NETWORK PANCAKE_STAGE_CACHE_MAX_MB ORCA_WEB_BEARER_TOKEN ORCA_WEB_TRUSTED_PROXIES; do
     grep -qE "^[[:space:]]+${var}:" "$TEMPLATE_FILE" \
         || fail "Missing environment variable $var in $TEMPLATE_FILE."
 done
 ok "Required environment variables are present."
 
-# 7. Container hardening
-echo "[7/10] Checking container hardening..."
+# 8. Container hardening
+echo "[8/12] Checking container hardening..."
 grep -qF 'no-new-privileges:true' "$TEMPLATE_FILE" \
     || fail "Missing security_opt no-new-privileges:true."
 CAP_DROP_BLOCK="$(sed -n '/cap_drop:/,/^[[:space:]]*[a-z]/p' "$TEMPLATE_FILE")"
@@ -114,32 +129,54 @@ if grep -qE '^[[:space:]]*network_mode:[[:space:]]*host' "$TEMPLATE_FILE"; then
 fi
 ok "Container hardening checks passed."
 
-# 8. Legacy placeholders
-echo "[8/10] Checking for legacy placeholders..."
+# 9. TrueNAS portal
+echo "[9/12] Checking the TrueNAS portal entry..."
+grep -qE '^x-portals:' "$TEMPLATE_FILE" \
+    || fail "Missing x-portals for the TrueNAS Open button."
+grep -qE '^[[:space:]]+port: 6868$' "$TEMPLATE_FILE" \
+    || fail "x-portals must point at the default port 6868."
+grep -qF 'scheme: http' "$TEMPLATE_FILE" \
+    || fail "x-portals must advertise the HTTP UI."
+ok "TrueNAS portal entry is present."
+
+# 10. Legacy placeholders
+echo "[10/12] Checking for legacy placeholders..."
 if grep -rqE '__[A-Z_]+__' compose/ 2>/dev/null; then
     fail "Legacy __PLACEHOLDER__ syntax found in compose/."
 fi
 ok "No legacy placeholders found."
 
-# 9. Documentation set
-echo "[9/10] Checking documentation set..."
+# 11. Documentation and packaging files
+echo "[11/12] Checking documentation and packaging files..."
 for doc in \
+    README.md \
+    CHANGELOG.md \
+    LICENSE \
+    .env.example \
     docs/installation.md \
     docs/configuration.md \
     docs/storage.md \
     docs/networking.md \
     docs/printers.md \
     docs/reverse-proxy.md \
+    docs/security.md \
+    docs/usage.md \
     docs/upgrades.md \
     docs/backup-restore.md \
     docs/troubleshooting.md \
-    truenas/README.md; do
-    [ -f "$doc" ] || fail "Missing documentation file: $doc"
+    truenas/README.md \
+    truenas/pancake-slicer.example.yaml; do
+    [ -f "$doc" ] || fail "Missing documentation or packaging file: $doc"
 done
-ok "Documentation set is complete."
+for script in scripts/init-env.sh scripts/render-compose.sh scripts/validate.sh scripts/check-secrets.sh; do
+    [ -f "$script" ] || fail "Missing script: $script"
+done
+grep -qF '[MIT License](LICENSE)' README.md \
+    || fail "README.md must link to the MIT LICENSE."
+ok "Documentation and packaging files are complete."
 
-# 10. Secret leakage
-echo "[10/10] Running secret leakage check..."
+# 12. Secret leakage
+echo "[12/12] Running secret leakage check..."
 ./scripts/check-secrets.sh
 
 echo "--- Validation Successful ---"
