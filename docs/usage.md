@@ -28,6 +28,21 @@ the same projects and printers. See [Security](security.md) before sharing it.
 4. **Check the output.** Preview the result and, for a new printer, supervise
    the first print.
 
+## Importing a Custom Filament Profile
+
+PancakeSlicer can import Orca-style filament JSON profiles.
+
+1. Choose **File → Import profiles…**.
+2. Select the `.json` file.
+3. Review the import preview, then add the profile or replace an existing one.
+4. Open **Library → Filaments**, select the imported profile, and assign it to a
+   slot.
+
+The repository includes an example under
+[`config/filament/`](../config/filament/README.md): the
+**Extrudr GreenTEC Pro** JSON profile for the Voron 0.1 with a 0.4 mm nozzle.
+Importing a profile does not change the printer profile or the process settings.
+
 ## Uploading and Managing Models
 
 The exact upload control depends on the upstream UI version, but the workflow is

@@ -168,12 +168,14 @@ Look for `"status":"ok"` and, after initialization,
 - [Upgrades & Maintenance](docs/upgrades.md)
 - [Backup & Restore](docs/backup-restore.md)
 - [Troubleshooting](docs/troubleshooting.md)
+- [Custom Filament Profiles](config/filament/README.md)
 - [TrueNAS Packaging Notes](truenas/README.md)
 
 ## Repository Layout
 
 ```text
 compose/       Compose template with environment substitution
+config/        Optional custom filament profiles for import
 scripts/       Init, render, validation, and secret-check scripts
 docs/          Operator documentation
 truenas/       TrueNAS SCALE Custom App notes and example YAML

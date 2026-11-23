@@ -1,0 +1,749 @@
+{
+	"activate_air_filtration": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"activate_air_filtration_during_print": [
+		"1",
+		"1",
+		"1",
+		"1",
+		"1",
+		"1"
+	],
+	"activate_air_filtration_on_completion": [
+		"1",
+		"1",
+		"1",
+		"1",
+		"1",
+		"1"
+	],
+	"activate_chamber_temp_control": [
+		"0"
+	],
+	"adaptive_pressure_advance": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"adaptive_pressure_advance_bridges": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"adaptive_pressure_advance_model": [
+		"0,0,0\n0,0,0",
+		"0,0,0\n0,0,0",
+		"0,0,0\n0,0,0",
+		"0,0,0\n0,0,0",
+		"0,0,0\n0,0,0",
+		"0,0,0\n0,0,0"
+	],
+	"adaptive_pressure_advance_overhangs": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"additional_cooling_fan_speed": [
+		"70",
+		"70",
+		"70",
+		"70",
+		"70",
+		"70"
+	],
+	"additional_fan_full_speed_layer": [
+		"0"
+	],
+	"chamber_minimal_temperature": [
+		"0"
+	],
+	"chamber_temperature": [
+		"0"
+	],
+	"close_additional_fan_first_x_layers": [
+		"1"
+	],
+	"close_fan_the_first_x_layers": [
+		"1"
+	],
+	"compatible_printers": [
+		"Voron 0.1 0.4 nozzle"
+	],
+	"complete_print_exhaust_fan_speed": [
+		"70",
+		"70",
+		"70",
+		"70",
+		"70",
+		"70"
+	],
+	"cool_plate_temp": [
+		"60"
+	],
+	"cool_plate_temp_initial_layer": [
+		"60"
+	],
+	"default_filament_colour": [
+		""
+	],
+	"dont_slow_down_outer_wall": [
+		"0"
+	],
+	"during_print_exhaust_fan_speed": [
+		"70",
+		"70",
+		"70",
+		"70",
+		"70",
+		"70"
+	],
+	"enable_overhang_bridge_fan": [
+		"1"
+	],
+	"enable_pressure_advance": [
+		"1",
+		"1",
+		"1",
+		"1",
+		"1",
+		"1"
+	],
+	"eng_plate_temp": [
+		"60"
+	],
+	"eng_plate_temp_initial_layer": [
+		"60"
+	],
+	"fan_cooling_layer_time": [
+		"100"
+	],
+	"fan_max_speed": [
+		"80",
+		"80",
+		"80",
+		"80",
+		"80",
+		"80"
+	],
+	"fan_min_speed": [
+		"30",
+		"30",
+		"30",
+		"30",
+		"30",
+		"30"
+	],
+	"filament_adaptive_volumetric_speed": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"filament_adhesiveness_category": [
+		"0"
+	],
+	"filament_change_extrusion_role_gcode": [
+		""
+	],
+	"filament_change_length": [
+		"10"
+	],
+	"filament_change_length_nc": [
+		"10"
+	],
+	"filament_cooling_before_tower": [
+		"10",
+		"10",
+		"10",
+		"10",
+		"10",
+		"10"
+	],
+	"filament_cooling_final_speed": [
+		"3.4"
+	],
+	"filament_cooling_initial_speed": [
+		"2.2"
+	],
+	"filament_cooling_moves": [
+		"4"
+	],
+	"filament_cost": [
+		"20"
+	],
+	"filament_density": [
+		"1.35"
+	],
+	"filament_deretraction_speed": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_dev_ams_drying_ams_limitations": [
+		""
+	],
+	"filament_dev_ams_drying_heat_distortion_temperature": [
+		"0"
+	],
+	"filament_dev_ams_drying_temperature": [
+		"0"
+	],
+	"filament_dev_ams_drying_time": [
+		"0"
+	],
+	"filament_dev_chamber_drying_bed_temperature": [
+		"0"
+	],
+	"filament_dev_chamber_drying_time": [
+		"0"
+	],
+	"filament_dev_drying_cooling_temperature": [
+		"0"
+	],
+	"filament_dev_drying_softening_temperature": [
+		"0"
+	],
+	"filament_diameter": [
+		"1.75"
+	],
+	"filament_end_gcode": [
+		"; filament end gcode\n"
+	],
+	"filament_extruder_compatibility": [
+		"0"
+	],
+	"filament_extruder_variant": [
+		"Direct Drive Standard",
+		"Direct Drive High Flow",
+		"Direct Drive Extra High Flow",
+		"Bowden Standard",
+		"Bowden High Flow",
+		"Bowden Extra High Flow"
+	],
+	"filament_flow_ratio": [
+		"0.9",
+		"0.9",
+		"0.9",
+		"0.9",
+		"0.9",
+		"0.9"
+	],
+	"filament_flush_temp": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"filament_flush_temp_fast": [
+		"0"
+	],
+	"filament_flush_volumetric_speed": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"filament_ironing_flow": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_ironing_inset": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_ironing_spacing": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_ironing_speed": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_is_support": [
+		"0"
+	],
+	"filament_loading_speed": [
+		"28"
+	],
+	"filament_loading_speed_start": [
+		"3"
+	],
+	"filament_long_retractions_when_cut": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_max_volumetric_speed": [
+		"16",
+		"16",
+		"16",
+		"16",
+		"16",
+		"16"
+	],
+	"filament_minimal_purge_on_wipe_tower": [
+		"15",
+		"15",
+		"15",
+		"15",
+		"15",
+		"15"
+	],
+	"filament_multitool_ramming": [
+		"1",
+		"1",
+		"1",
+		"1",
+		"1",
+		"1"
+	],
+	"filament_multitool_ramming_flow": [
+		"20",
+		"20",
+		"20",
+		"20",
+		"20",
+		"20"
+	],
+	"filament_multitool_ramming_volume": [
+		"5",
+		"5",
+		"5",
+		"5",
+		"5",
+		"5"
+	],
+	"filament_notes": [
+		"Extrudr GreenTEC Pro\nSource: https://extrudr.com/en/inlt/products/greentec-pro/\nConfigured nozzle range: 210-230 C\nProfile: 210 C first layer, 205 C other layers\nBed: 60 C (manufacturer range 20-90 C)\nMax volumetric flow: 16 mm3/s (0.4 mm nozzle)\nFlow ratio: 0.9\nPressure advance: 0.02 (enabled)\nDensity: 1.35 g/cm3 (ISO 1183)\nShrinkage: 0.4 % (ISO 294-4); XY compensation: 100.4 %\nVicat A: 160 C (ISO 306); HDT/B: 115 C\nFan: 30-80 %\nDrying: 60 C for 0-4 h\nStarts from Generic PLA @System. Verify flow and pressure advance on your printer."
+	],
+	"filament_pre_cooling_temperature": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"filament_pre_cooling_temperature_nc": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"filament_preheat_temperature_delta": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"filament_prime_volume": [
+		"45"
+	],
+	"filament_prime_volume_nc": [
+		"60"
+	],
+	"filament_printable": [
+		"3"
+	],
+	"filament_ramming_parameters": [
+		"120 100 6.6 6.8 7.2 7.6 7.9 8.2 8.7 9.4 9.9 10.0| 0.05 6.6 0.45 6.8 0.95 7.8 1.45 8.3 1.95 9.7 2.45 10 2.95 7.6 3.45 7.6 3.95 7.6 4.45 7.6 4.95 7.6"
+	],
+	"filament_ramming_travel_time": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"filament_ramming_travel_time_nc": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"filament_ramming_volumetric_speed": [
+		"-1",
+		"-1",
+		"-1",
+		"-1",
+		"-1",
+		"-1"
+	],
+	"filament_ramming_volumetric_speed_nc": [
+		"-1",
+		"-1",
+		"-1",
+		"-1",
+		"-1",
+		"-1"
+	],
+	"filament_retract_after_wipe": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_retract_before_wipe": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_retract_length_nc": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_retract_length_toolchange": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_retract_lift_above": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_retract_lift_below": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_retract_lift_enforce": "nil,nil,nil,nil,nil,nil",
+	"filament_retract_restart_extra": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_retract_restart_extra_toolchange": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_retract_when_changing_layer": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_retraction_distances_when_cut": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_retraction_length": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_retraction_minimum_travel": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_retraction_speed": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_settings_id": [
+		"Extrudr GreenTEC Pro @Voron 0.1"
+	],
+	"filament_shrink": [
+		"100.4%"
+	],
+	"filament_shrinkage_compensation_z": [
+		"100%"
+	],
+	"filament_soluble": [
+		"0"
+	],
+	"filament_stamping_distance": [
+		"0"
+	],
+	"filament_stamping_loading_speed": [
+		"0"
+	],
+	"filament_start_gcode": [
+		"; Filament gcode\n"
+	],
+	"filament_toolchange_delay": [
+		"0"
+	],
+	"filament_tower_interface_pre_extrusion_dist": [
+		"10"
+	],
+	"filament_tower_interface_pre_extrusion_length": [
+		"0"
+	],
+	"filament_tower_interface_print_temp": [
+		"-1"
+	],
+	"filament_tower_interface_purge_volume": [
+		"20"
+	],
+	"filament_tower_ironing_area": [
+		"4"
+	],
+	"filament_type": [
+		"PLA"
+	],
+	"filament_unloading_speed": [
+		"90"
+	],
+	"filament_unloading_speed_start": [
+		"100"
+	],
+	"filament_vendor": [
+		"Extrudr"
+	],
+	"filament_wipe": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_wipe_distance": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_z_hop": [
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil",
+		"nil"
+	],
+	"filament_z_hop_types": "nil,nil,nil,nil,nil,nil",
+	"first_x_layer_fan_speed": [
+		"0"
+	],
+	"from": "User",
+	"full_fan_speed_layer": [
+		"0"
+	],
+	"hot_plate_temp": [
+		"60"
+	],
+	"hot_plate_temp_initial_layer": [
+		"60"
+	],
+	"idle_temperature": [
+		"0"
+	],
+	"inherits": "Generic PLA @System",
+	"initial_layer_fan_speed": [
+		"-1"
+	],
+	"internal_bridge_fan_speed": [
+		"-1"
+	],
+	"ironing_fan_speed": [
+		"-1"
+	],
+	"long_retractions_when_ec": [
+		"0",
+		"0",
+		"0",
+		"0",
+		"0",
+		"0"
+	],
+	"name": "Extrudr GreenTEC Pro @Voron 0.1",
+	"nozzle_temperature": [
+		"205",
+		"205",
+		"205",
+		"205",
+		"205",
+		"205"
+	],
+	"nozzle_temperature_initial_layer": [
+		"210",
+		"210",
+		"210",
+		"210",
+		"210",
+		"210"
+	],
+	"nozzle_temperature_range_high": [
+		"230",
+		"230",
+		"230",
+		"230",
+		"230",
+		"230"
+	],
+	"nozzle_temperature_range_low": [
+		"210",
+		"210",
+		"210",
+		"210",
+		"210",
+		"210"
+	],
+	"overhang_fan_speed": [
+		"80"
+	],
+	"overhang_fan_threshold": "50%",
+	"pellet_flow_coefficient": [
+		"0.4157"
+	],
+	"pressure_advance": [
+		"0.02",
+		"0.02",
+		"0.02",
+		"0.02",
+		"0.02",
+		"0.02"
+	],
+	"reduce_fan_stop_start_freq": [
+		"1"
+	],
+	"required_nozzle_HRC": [
+		"3"
+	],
+	"retraction_distances_when_ec": [
+		"10",
+		"10",
+		"10",
+		"10",
+		"10",
+		"10"
+	],
+	"slow_down_for_layer_cooling": [
+		"1"
+	],
+	"slow_down_layer_time": [
+		"4"
+	],
+	"slow_down_min_speed": [
+		"10"
+	],
+	"supertack_plate_temp": [
+		"60"
+	],
+	"supertack_plate_temp_initial_layer": [
+		"60"
+	],
+	"support_material_interface_fan_speed": [
+		"-1"
+	],
+	"temperature_vitrification": [
+		"60"
+	],
+	"textured_cool_plate_temp": [
+		"40"
+	],
+	"textured_cool_plate_temp_initial_layer": [
+		"40"
+	],
+	"textured_plate_temp": [
+		"60"
+	],
+	"textured_plate_temp_initial_layer": [
+		"60"
+	],
+	"version": "02.08.01.55",
+	"volumetric_speed_coefficients": [
+		"",
+		"",
+		"",
+		"",
+		"",
+		""
+	]
+}

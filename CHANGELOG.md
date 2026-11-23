@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-11-23
+
+### Added
+- `config/filament/` for optional custom filament profiles.
+- `Extrudr GreenTEC Pro` JSON profile for the Voron 0.1 with a 0.4 mm nozzle.
+- Import instructions in `config/filament/README.md` and `docs/usage.md`.
+- Validation for custom filament JSON profiles.
+
+### Notes
+- The profile inherits from `Generic PLA @System`. Material values are:
+  `1.35 g/cm³` density (ISO 1183), `0.4 %` shrinkage (ISO 294-4) with `100.4 %`
+  XY compensation, and `160 °C` Vicat A (ISO 306).
+- Nozzle temperatures are `210 °C` for the first layer and `205 °C` for other
+  layers, with a configured range of `210–230 °C`. Bed temperature is `60 °C`.
+- Maximum volumetric flow is `16 mm³/s`. Flow ratio is `0.90` and pressure
+  advance is `0.02`, with pressure advance enabled in the profile.
+
 ## [0.1.1] - 2026-11-23
 
 ### Added
