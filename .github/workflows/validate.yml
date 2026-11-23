@@ -1,0 +1,27 @@
+name: Validate Repository
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext-base
+
+      - name: Syntax check shell scripts
+        run: |
+          bash -n scripts/*.sh
+
+      - name: Validate Compose Template & Repository Structure
+        run: |
+          chmod +x scripts/*.sh
+          ./scripts/validate.sh

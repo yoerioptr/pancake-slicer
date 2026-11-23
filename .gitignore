@@ -1,0 +1,10 @@
+.env
+.env.local
+.env.production
+secrets.env
+build/
+*.secret
+*.log
+.DS_Store
+.idea
+compose.yaml

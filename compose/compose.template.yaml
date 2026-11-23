@@ -1,0 +1,54 @@
+# PancakeSlicer on TrueNAS SCALE (Docker-based Apps).
+#
+# This template is rendered by scripts/render-compose.sh. TrueNAS does not
+# expand .env variables in the Custom App YAML editor, so always paste the
+# rendered build/compose.yaml, never this file.
+services:
+  pancakeslicer:
+    # Pin a release tag. Do not use :latest for a stateful application.
+    image: "${PANCAKE_IMAGE}:${PANCAKE_VERSION}"
+    restart: unless-stopped
+
+    # LAN access: http://<TRUENAS_IP>:${PANCAKE_PORT}
+    ports:
+      - "${PANCAKE_PORT}:6868"
+
+    environment:
+      TZ: "${TZ}"
+      ORCA_WEB_MAX_JOBS: "${PANCAKE_MAX_JOBS}"
+      ORCA_WEB_PRINTER_NETWORK: "${PANCAKE_PRINTER_NETWORK}"
+      PANCAKE_STAGE_CACHE_MAX_MB: "${PANCAKE_STAGE_CACHE_MAX_MB}"
+      ORCA_WEB_BEARER_TOKEN: "${PANCAKE_BEARER_TOKEN}"
+      ORCA_WEB_TRUSTED_PROXIES: "${PANCAKE_TRUSTED_PROXIES}"
+      ORCA_WEB_RELEASE_FEED: "${PANCAKE_RELEASE_FEED}"
+
+    volumes:
+      # Projects, profiles, printers, preferences and finished job state.
+      - "${PANCAKE_DATA_PATH}:/data"
+      # Disposable slice scratch data. Exclude this path from snapshots/backups.
+      - "${PANCAKE_CACHE_PATH}:/data/jobs/stage-cache"
+
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+    healthcheck:
+      # The image is FROM scratch and has no shell. Use the bundled Node runtime
+      # to query the local health endpoint without external dependencies.
+      test:
+        - CMD
+        - /usr/bin/node
+        - -e
+        - "fetch('http://127.0.0.1:6868/api/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+    deploy:
+      resources:
+        limits:
+          # Slicing is CPU and memory intensive. Lower PANCAKE_MAX_JOBS before
+          # lowering this below the upstream recommendation of 8 GB.
+          memory: "${PANCAKE_MEMORY_LIMIT}"
