@@ -67,3 +67,7 @@ below:
 
 1. Add the JSON file to this folder using a lowercase, hyphenated filename.
 2. Run `./scripts/validate.sh` from the repository root.
+
+## See also
+
+- [Custom Printer Profiles](../printer/README.md)

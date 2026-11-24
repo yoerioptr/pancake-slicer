@@ -34,6 +34,12 @@ Bambu cloud accounts are not required for LAN-only operation.
 Add the printer using the Moonraker host and port (commonly `7125`). Ensure
 Moonraker is reachable from the TrueNAS host.
 
+Klipper machine profiles usually call `PRINT_START` and `PRINT_END` macros
+instead of embedding a full homing sequence. If the profile you import uses
+different macro names from your `printer.cfg`, edit its start and end G-code to
+match. A mismatch fails at the start of the print with an `Unknown command` or
+missing-parameter error.
+
 ## PrusaLink / Prusa Connect
 
 Add the printer using its PrusaLink host and port (commonly `80` or `8080`).
@@ -44,6 +50,33 @@ Credentials are configured in the printer entry.
 Use the printer's LAN IP and the protocol-specific port requested by the
 PancakeSlicer UI. Consult the upstream project and your printer documentation for
 the correct host/protocol combination.
+
+## Custom printer profiles
+
+The repository includes optional Orca-style machine profiles under
+[`config/printer/`](../config/printer/README.md). They are not mounted or loaded
+automatically. Import a profile with **File → Import profiles…**, then add the
+physical printer connection separately if you use one.
+
+### Anet A8 Plus with Hemera and Klipper
+
+The profile
+[`anet-a8-plus-hemera-klipper.json`](../config/printer/anet-a8-plus-hemera-klipper.json)
+targets a modified A8 Plus with an E3D Hemera V6 direct-drive extruder, a bed
+probe, and Klipper. It covers a 300 × 300 × 350 mm bed, a 0.4 mm nozzle, Klipper
+`PRINT_START`/`PRINT_END` macros, and conservative motion limits for the heavier
+toolhead.
+
+The profile is based on the **Generic Klipper Printer** catalog template because
+PancakeSlicer's bundled catalog has no Anet model. The library name is still
+**Anet A8 Plus (Hemera, Klipper)**. See
+[the printer profile README](../config/printer/README.md) for specifications,
+Klipper requirements, and recommended starting settings.
+
+The A8 Plus is not on the upstream collision-checked supported-printer list.
+Non-planar slicing uses a generic oversized head; the Hemera and probe make
+toolhead clearance especially important. Review the G-code preview and supervise
+the first print.
 
 ## Connectivity checks
 

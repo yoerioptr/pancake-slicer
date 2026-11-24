@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-11-24
+
+### Added
+- `config/printer/` for optional custom printer profiles.
+- `Anet A8 Plus (Hemera, Klipper)` machine preset for a modified A8 Plus with an
+  E3D Hemera V6 direct-drive extruder, a bed probe, and Klipper.
+- Import instructions in `config/printer/README.md`, `docs/printers.md`, and
+  `docs/usage.md`.
+- Validation for custom printer JSON profiles.
+
+### Notes
+- The profile is based on the `Generic Klipper Printer` catalog template because
+  the bundled catalog has no Anet model. The library name is
+  `Anet A8 Plus (Hemera, Klipper)`.
+- Build volume is `300 × 300 × 350 mm` with a `0.4 mm` nozzle.
+- The profile calls `PRINT_START` and `PRINT_END` and uses a `0.8 mm @ 30 mm/s`
+  direct-drive retraction.
+- Motion limits are conservative starting points (`200 mm/s`, `2000 mm/s²`) for
+  the heavier Hemera toolhead. The README explains how to align them with
+  Klipper's `printer.cfg` and how to tune pressure advance and input shaping.
+
 ## [0.2.0] - 2026-11-23
 
 ### Added

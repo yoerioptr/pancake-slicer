@@ -105,6 +105,16 @@ For example, setting it to `ZimengXiong/PancakeSlicer` lets the UI offer an
 update notice when a newer release exists. The deployment still uses the pinned
 `PANCAKE_VERSION`.
 
+## Custom profiles
+
+`config/filament/` and `config/printer/` contain optional example profiles for
+manual import. They are not mounted into the container and are not read from disk
+at runtime. Import them through the UI; the imported copies are stored under
+`PANCAKE_DATA_PATH` and are included in that path's backups.
+
+See [Custom Filament Profiles](../config/filament/README.md) and
+[Custom Printer Profiles](../config/printer/README.md).
+
 ## Upstream environment mapping
 
 The template also sets these upstream variables:

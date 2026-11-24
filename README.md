@@ -152,6 +152,9 @@ Look for `"status":"ok"` and, after initialization,
   `PANCAKE_TRUSTED_PROXIES`. See [Reverse Proxy](docs/reverse-proxy.md).
 - **Non-planar slicing** — Experimental upstream. Review the G-code preview and
   supervise the first print. See [Using PancakeSlicer](docs/usage.md).
+- **Custom profiles** — `config/filament/` and `config/printer/` contain examples
+  only. Import them through the UI. The Anet A8 Plus profile targets a
+  Hemera/Klipper build and calls `PRINT_START`/`PRINT_END`.
 - **AGPL-3.0** — PancakeSlicer is licensed AGPL-3.0-only. The image bundles the
   corresponding source archive; see the upstream repository for details.
 
@@ -169,13 +172,14 @@ Look for `"status":"ok"` and, after initialization,
 - [Backup & Restore](docs/backup-restore.md)
 - [Troubleshooting](docs/troubleshooting.md)
 - [Custom Filament Profiles](config/filament/README.md)
+- [Custom Printer Profiles](config/printer/README.md)
 - [TrueNAS Packaging Notes](truenas/README.md)
 
 ## Repository Layout
 
 ```text
 compose/       Compose template with environment substitution
-config/        Optional custom filament profiles for import
+config/        Optional custom filament and printer profiles for import
 scripts/       Init, render, validation, and secret-check scripts
 docs/          Operator documentation
 truenas/       TrueNAS SCALE Custom App notes and example YAML

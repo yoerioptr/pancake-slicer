@@ -91,6 +91,37 @@ networking note in [Networking](networking.md).
   enabled.
 - Check the container logs for connection errors.
 
+## A custom printer profile is skipped on import
+
+**Cause:** A raw Orca machine preset must name a printer model that exists in
+PancakeSlicer's bundled catalog. If the preset references a printer that is not
+in the catalog, the import preview marks it as skipped.
+
+**Fix:** Use a profile based on a catalog template. The repository's
+[`anet-a8-plus-hemera-klipper.json`](../config/printer/anet-a8-plus-hemera-klipper.json)
+is based on **Generic Klipper Printer** and overrides the machine values. If you
+write your own, set `printer_model` to a catalog model and `inherits` to one of
+its nozzle variants.
+
+Settings listed as **not stored** in the import preview are usually process or
+filament settings rather than printer settings. They are ignored; check the bed,
+nozzle, motion, and G-code values after import.
+
+## Klipper reports an unknown `PRINT_START` or `PRINT_END`
+
+**Cause:** The imported printer profile calls macros that your `printer.cfg` does
+not define, or the macro parameters have different names.
+
+**Fix:** Rename the macros or edit the profile's `machine_start_gcode` and
+`machine_end_gcode`. The A8 Plus example expects:
+
+```gcode
+PRINT_START EXTRUDER=[nozzle_temperature_initial_layer] BED=[bed_temperature_initial_layer_single]
+```
+
+and `PRINT_END`. Keep the heating and probing steps inside the macros so every
+print uses the same homing and mesh routine.
+
 ## Upload fails with 413
 
 **Cause:** A reverse proxy or the app's upload limit rejected the file.

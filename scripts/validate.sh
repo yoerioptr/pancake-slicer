@@ -165,6 +165,7 @@ for doc in \
     docs/backup-restore.md \
     docs/troubleshooting.md \
     config/filament/README.md \
+    config/printer/README.md \
     truenas/README.md \
     truenas/pancake-slicer.example.yaml; do
     [ -f "$doc" ] || fail "Missing documentation or packaging file: $doc"
@@ -176,8 +177,8 @@ grep -qF '[MIT License](LICENSE)' README.md \
     || fail "README.md must link to the MIT LICENSE."
 ok "Documentation and packaging files are complete."
 
-# 12. Custom filament profiles
-echo "[12/13] Checking custom filament profiles..."
+# 12. Custom filament and printer profiles
+echo "[12/13] Checking custom filament and printer profiles..."
 for profile in config/filament/*.json; do
     [ -e "$profile" ] || continue
     python3 -c 'import json,sys; json.load(open(sys.argv[1]))' "$profile" \
@@ -191,7 +192,16 @@ for profile in config/filament/*.json; do
             || fail "$profile must enable pressure advance."
     fi
 done
-ok "Custom filament profiles are valid."
+for profile in config/printer/*.json; do
+    [ -e "$profile" ] || continue
+    python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); assert d.get("type") == "machine" or d.get("printer_settings_id"), "missing machine type"; assert d.get("inherits"), "missing inherits"; assert d.get("nozzle_diameter"), "missing nozzle_diameter"; assert len(d.get("printable_area") or []) >= 4, "missing printable_area"; assert float(d.get("printable_height", 0)) > 0, "missing printable_height"' "$profile" \
+        || fail "$profile is not a valid printer profile."
+    if [ "$(basename "$profile")" = "anet-a8-plus-hemera-klipper.json" ]; then
+        python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); assert d["printable_area"] == ["0x0", "300x0", "300x300", "0x300"], "printable_area must be 300x300"; assert d["printable_height"] == "350", "printable_height must be 350"; assert d["gcode_flavor"] == "klipper", "gcode_flavor must be klipper"; assert d["printer_model"] == "Generic Klipper Printer", "printer_model must be Generic Klipper Printer"; assert "PRINT_START" in d["machine_start_gcode"], "start G-code must call PRINT_START"; assert "PRINT_END" in d["machine_end_gcode"], "end G-code must call PRINT_END"' "$profile" \
+            || fail "$profile has unexpected Anet A8 Plus values."
+    fi
+done
+ok "Custom filament and printer profiles are valid."
 
 # 13. Secret leakage
 echo "[13/13] Running secret leakage check..."

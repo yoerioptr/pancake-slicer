@@ -43,6 +43,30 @@ The repository includes an example under
 **Extrudr GreenTEC Pro** JSON profile for the Voron 0.1 with a 0.4 mm nozzle.
 Importing a profile does not change the printer profile or the process settings.
 
+## Importing a Custom Printer Profile
+
+PancakeSlicer imports Orca-style machine JSON profiles through the same
+**File → Import profiles…** dialog.
+
+1. Choose **File → Import profiles…**.
+2. Select the `.json` file.
+3. Review the import preview. The profile is added as a printer preset; it does
+   not create a physical connection.
+4. Open **Library → Printers**, select the imported printer, and confirm the bed
+   size, nozzle, and motion settings.
+5. Add the printer's network connection separately, or export G-code for
+   microSD/USB.
+
+The repository includes an example under
+[`config/printer/`](../config/printer/README.md): the
+**Anet A8 Plus (Hemera, Klipper)** profile for a modified A8 Plus with a Hemera
+V6 extruder, a bed probe, and Klipper.
+
+Klipper profiles often call `PRINT_START` and `PRINT_END` macros. If your
+`printer.cfg` uses different macro names or parameters, edit the profile's start
+and end G-code before importing. Importing a printer profile does not change your
+existing filaments or process profiles.
+
 ## Uploading and Managing Models
 
 The exact upload control depends on the upstream UI version, but the workflow is
